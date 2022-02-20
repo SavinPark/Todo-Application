@@ -1,9 +1,15 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
-// components
+// custom Hook
+import useFetch from './useFetch.js';
+
+// components 
 import List from './components/List.jsx';
 
+
+
+// App Component
 function App() {
 
   // ---- useState ---- //
@@ -11,23 +17,23 @@ function App() {
   const [todos, setTodos] = useState(['Java 공부하기', 'React 공부하기', '운동하기']);
   // 새로운 todo
   const [newTodo, setNewTodo] = useState();
-
+  
+  const loading = useFetch(setTodos, 'http://localhost:4000/initialtodos');
 
   // changeInputData : newTodo에 input에 입력한 내용을 저장하는 함수
   const changeInputData = (e) => {
     setNewTodo(e.target.value);
   }
-  // addTodo
+  // addTodo : 새로운 todo를 배열에 추가하는 함수
   const addTodo = (e) => {
     e.preventDefault(); // 기본값 form 전송방지
-    setTodos([...todos, newTodo]);
+    setTodos([...todos, {'title': newTodo, 'todoCode': todos.length, 'contents': '', done: false, edit: false}]);
   }
 
-  // ---- useEffect ---- //
   useEffect(() => {
-    console.log('새롭게 렌더링 되었습니다.');
-  // });
-  }, [todos]); // todos에 변경사항이 생기면 콜백함수 실행
+    console.log("새로운 내용이 추가되었습니다.", todos);
+  }, [todos]);
+
 
   return(
     <>
@@ -38,7 +44,7 @@ function App() {
         <button onClick={addTodo}>ADD</button>
       </form>
 
-      <List todos={todos} />
+      <List todos={todos} loading={loading}/>
     </>
   );
 }
