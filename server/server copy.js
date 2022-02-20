@@ -13,10 +13,18 @@ const initialTodoData = require('../src/InitialTodoData.js');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.json()); 
 
 // API ------------------------------------------------------------------ //
 // GET 
+app.get('/initialtodos', (req, res) => {
+  // Request
+  // const todoCode = req.body.name;
+  // Response
+  console.log(req.body);
+  res.send(initialTodoData);
+})
+/*
+// ========================================= //
 /// 모든 Todos 조회
 app.get('/initialtodos', (req, res) => {
   res.send(initialTodoData);
@@ -27,7 +35,8 @@ app.get('/initialtodos/:dailyKey', (req, res) => {
   const {dailyKey} =  req.params;
   res.send(initialTodoData.filter(todo => todo.date === Number(dailyKey)));
 });
-
+// ========================================= //
+*/
 
 // listen() ------------------------------------------------------------- //
 app.listen(port, () => {

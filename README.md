@@ -19,3 +19,9 @@
     todoCode는 YYYYMMDDN.. 형식의 문자열이어야 한다.
     하지만 새로 추가된 todo의 todoCode는 todos 목록에서의 순서를 의미하는 숫자 타입이다.
   * 해결방법 : 오늘에 해당하는 할 일만 렌더링되도록 todo application을 수정하고, todoCode형식도 변경해준다.
+
+### [5] 버그 수정  + 오늘의 TodoList 보기
+* Header 컴포넌트에 날짜 & 요일 표현 추가
+* 해당 날짜에 대한 Todo 목록 불러오기
+* 새로운 항목 추가 시 올바른 todoCode 적용
+* 할 일의 완료/미완료 상태 표현 기능 버그 수정 완료

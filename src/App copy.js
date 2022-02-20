@@ -16,16 +16,19 @@ export const TodoContext = React.createContext();
 function App() {
 
   const [todos, setTodos] = useState([]);  // todos
-
+  
+  const loading = useFetch(setTodos, 'http://localhost:4000/initialtodos');
+  /*
   // Today
   const now = new Date();
-  const dailyKey = Number(new Date(now.setDate(now.getDate()+1)).toISOString().substring(0,10).replace(/-/g,'')); // YYYYMMDD (number)
+  const dailyKey = Number(new Date(now.setDate(now.getDate())).toISOString().substring(0,10).replace(/-/g,'')); // YYYYMMDD (number)
   // const dailyKey = Number(new Date(now.setDate(now.getDate()+when)).toISOString().substring(0,10).replace(/-/g,''));
   
   const loading = useFetch(setTodos, `http://localhost:4000/initialtodos/${dailyKey}`);
+  */
   
   const addTodo = (newTodo) => { // addTodo : 새로운 todo를 배열에 추가하는 함수
-    setTodos([...todos, {'todoCode': `${dailyKey}${todos.length + 1}`, 'date': dailyKey, 'title': newTodo, 'contents': '', done: false, edit: false}]);
+    setTodos([...todos, {'title': newTodo, 'todoCode': todos.length + 1, 'contents': '', done: false, edit: false}]);
   }
 
   // changeTodoDone
