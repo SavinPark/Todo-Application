@@ -1,6 +1,7 @@
 import React from 'react';
+import Item from './Item.jsx';
 
-function List({todos, loading}) {
+function List({todos, loading, changeTodoDone}) {
 
   /*
   - List.jsx는 전달 받은 loading의 값이 true이면 "Loading..."을 출력하고,
@@ -8,7 +9,11 @@ function List({todos, loading}) {
   */
   let todoList = <div>Loading...</div>;
   // const todoList = todos.map(todo => <li key={todo.id}>{todo.title}</li>);
-  if(!loading) todoList = todos.map(todo => <li key={todo.todoCode}>{todo.title}</li>);
+  // if(!loading) todoList = todos.map(todo => <li key={todo.todoCode}>{todo.title}</li>);
+  if(!loading) todoList = todos.map(todo => 
+    <Item key={todo.todoCode} todo={todo} changeTodoDone={changeTodoDone} />
+  );
+
   
   return(
     <ul>

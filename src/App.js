@@ -6,6 +6,7 @@ import useFetch from './useFetch.js';
 
 // Components 
 import List from './components/List.jsx';
+import Header from './components/Header.jsx';
 
 
 
@@ -26,6 +27,18 @@ function App() {
     setTodos([...todos, {'title': newTodo, 'todoCode': todos.length, 'contents': '', done: false, edit: false}]);
   }
 
+  // changeTodoDone
+  const changeTodoDone = (todoCode) => {
+    const updateTodos = todos.map(todo => {
+      if(todo.todoCode === todoCode) {
+        if(todo.done === true) todo.done = false;
+        else todo.done = true;
+      }
+      return todo;
+    })
+    setTodos(updateTodos);
+  }
+
   useEffect(() => {
     console.log("새로운 내용이 추가되었습니다.", todos);
   }, [todos]);
@@ -35,12 +48,14 @@ function App() {
     <>
       <h1>Todo Application</h1>
 
+      <Header todos={todos} />
+
       <form action="">
         <input type="text" name="" onChange={changeInputData}/>
         <button onClick={addTodo}>ADD</button>
       </form>
 
-      <List todos={todos} loading={loading}/>
+      <List todos={todos} loading={loading} changeTodoDone={changeTodoDone} />
     </>
   );
 }
