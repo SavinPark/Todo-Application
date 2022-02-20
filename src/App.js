@@ -5,26 +5,22 @@ import './App.css';
 import useFetch from './useFetch.js';
 
 // Components 
-import List from './components/List.jsx';
 import Header from './components/Header.jsx';
+import Form from './components/Form.jsx';
+import List from './components/List.jsx';
 
-
+// Context API
+export const TodoContext = React.createContext();
 
 // App Component
 function App() {
 
   const [todos, setTodos] = useState([]);  // todos
-  const [newTodo, setNewTodo] = useState();  // new todos
   
   const loading = useFetch(setTodos, 'http://localhost:4000/initialtodos');
-
-  const changeInputData = (e) => { // changeInputData : newTodo에 input에 입력한 내용을 저장하는 함수
-    setNewTodo(e.target.value);
-  }
   
-  const addTodo = (e) => { // addTodo : 새로운 todo를 배열에 추가하는 함수
-    e.preventDefault(); // 기본값 form 전송방지
-    setTodos([...todos, {'title': newTodo, 'todoCode': todos.length, 'contents': '', done: false, edit: false}]);
+  const addTodo = (newTodo) => { // addTodo : 새로운 todo를 배열에 추가하는 함수
+    setTodos([...todos, {'title': newTodo, 'todoCode': todos.length + 1, 'contents': '', done: false, edit: false}]);
   }
 
   // changeTodoDone
@@ -45,18 +41,13 @@ function App() {
 
 
   return(
-    <>
-      <h1>Todo Application</h1>
 
-      <Header todos={todos} />
+    <TodoContext.Provider value={{todos, addTodo, loading, changeTodoDone}}>
+      <Header />
+      <Form />
+      <List />
+    </TodoContext.Provider>
 
-      <form action="">
-        <input type="text" name="" onChange={changeInputData}/>
-        <button onClick={addTodo}>ADD</button>
-      </form>
-
-      <List todos={todos} loading={loading} changeTodoDone={changeTodoDone} />
-    </>
   );
 }
 
