@@ -1,21 +1,24 @@
 import React, { useContext, useRef } from 'react';
 import { TodoContext } from '../App.js';
+import './Form.css';
 
-function Form() {
+function Form({id}) {
 
-  const inputRef = useRef(false);
+  const titleRef = useRef(false);
+  const contentsRef = useRef(false);
   const {addTodo} = useContext(TodoContext);
   
   // addTodoData
   const addTodoData = (e) => {
     e.preventDefault(); 
-    addTodo(inputRef.current.value);
+    addTodo(titleRef.current.value, contentsRef.current.value);
   }
 
   return(
-    <form action="">
-      <input type="text" ref={inputRef}/>
-      <button onClick={addTodoData}>ADD</button>
+    <form action="" className='todoForm'>
+      <input placeholder="Title" type="text" className="title" ref={titleRef}/>
+      <textarea placeholder="Contents" className="contents" ref={contentsRef}/>
+      <button onClick={addTodoData} className="addBtn">SAVE</button>
     </form>
   );
 }

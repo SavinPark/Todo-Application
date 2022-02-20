@@ -9,11 +9,10 @@ const bodyParser = require('body-parser');
 const initialTodoData = require('../src/InitialTodoData.js');
 
 
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.json()); 
+// app.use(express.json()); 
 
 // API ------------------------------------------------------------------ //
 // GET 

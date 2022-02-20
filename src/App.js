@@ -24,8 +24,8 @@ function App() {
   
   const loading = useFetch(setTodos, `http://localhost:4000/initialtodos/${dailyKey}`);
   
-  const addTodo = (newTodo) => { // addTodo : 새로운 todo를 배열에 추가하는 함수
-    setTodos([...todos, {'todoCode': `${dailyKey}${todos.length + 1}`, 'date': dailyKey, 'title': newTodo, 'contents': '', done: false, edit: false}]);
+  const addTodo = (newTodoTitle, newTodoContents) => { // addTodo : 새로운 todo를 배열에 추가하는 함수
+    setTodos([...todos, {todoCode: `${dailyKey}${todos.length + 1}`, date: dailyKey, title: newTodoTitle, contents: newTodoContents, done: false, edit: false, delete: false}]);
   }
 
   // changeTodoDone
@@ -39,20 +39,68 @@ function App() {
     })
     setTodos(updateTodos);
   }
+  // changeTodoEdit ---------------------------
+  const changeTodoEdit = (todoCode) => {
+    const updateTodos = todos.map(todo => {
+      if(todo.todoCode === todoCode) {
+        if(todo.edit === true) todo.edit = false;
+        else todo.edit = true;
+      }
+      return todo;
+    })
+    setTodos(updateTodos);
+  }
+  const changeTodoDelete = (todoCode) => {
+    const updateTodos = todos.map(todo => {
+      if(todo.todoCode === todoCode) {
+        if(todo.delete === true) todo.delete = false;
+        else todo.delete = true;
+      }
+      return todo;
+    })
+    console.log(updateTodos);
+    setTodos(updateTodos);
+  }
 
   useEffect(() => {
     console.log("새로운 내용이 추가되었습니다.", todos);
   }, [todos]);
 
+  // Date Control Btns ----------------------
+  const [prev, setPrev] = useState(0);
+  const [next, setNext] = useState(0);
+  const [openFormPage, setOpenFormPage] = useState(false);
+  const onPrev = () => {
+    console.log('prev');
+    setPrev(prev + 1);
+  }
+  const onNext = () => {
+    console.log('next');
+    setNext(next + 1);
+  }
+  const openForm = () => {
+    setOpenFormPage(!openFormPage);
+  }
+
 
   return(
 
-    <TodoContext.Provider value={{todos, addTodo, loading, changeTodoDone}}>
+    <TodoContext.Provider value={{todos, addTodo, loading, changeTodoDone, changeTodoEdit, changeTodoDelete}}>
       <Header />
-      <Form />
       <List />
+      <div className='btn-container'>
+        <button className='btn btn--prev' onClick={onPrev}>PREV</button>
+        <button className='btn btn--next' onClick={onNext}>NEXT</button>
+        <button className='btn btn--create' onClick={openForm} >OPEN FORM</button>
+      </div>
+      {
+        openFormPage && <Form />
+      }
+      {
+        // edit === true 이면 Form 컴포넌트 open
+        todos.map(todo => todo.edit && <Form />) 
+      }
     </TodoContext.Provider>
-
   );
 }
 

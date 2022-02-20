@@ -5,7 +5,8 @@ module.exports = [
     title: 'Todo 20220217-1', 
     contents: 'Todo 1 Todo 1 Todo 1', 
     done: true, 
-    edit: false
+    edit: false,
+    delete: false
   },
   {
     todoCode: '202202181', 
@@ -13,7 +14,8 @@ module.exports = [
     title: 'Todo 20220218-1', 
     contents: 'Todo 1 Todo 1 Todo 1', 
     done: true, 
-    edit: false
+    edit: false,
+    delete: false
   },
   {
     todoCode: '202202182', 
@@ -21,7 +23,8 @@ module.exports = [
     title: 'Todo 20220218-2', 
     contents: 'Todo 2 Todo 2 Todo 2', 
     done: true, 
-    edit: false
+    edit: false,
+    delete: false
   },
   {
     todoCode: '202202191', 
@@ -29,7 +32,8 @@ module.exports = [
     title: 'Todo 20220219-1', 
     contents: 'Todo 1 Todo 1 Todo 1', 
     done: false, 
-    edit: false
+    edit: false,
+    delete: false
   },
   {
     todoCode: '202202192', 
@@ -37,7 +41,8 @@ module.exports = [
     title: 'Todo 20220219-2', 
     contents: 'Todo 2 Todo 2 Todo 2', 
     done: false, 
-    edit: false
+    edit: false,
+    delete: false
   },
   {
     todoCode: '202202193', 
@@ -45,7 +50,8 @@ module.exports = [
     title: 'Todo 20220219-3',
     contents: 'Todo 3 Todo 3 Todo 3', 
     done: false, 
-    edit: false
+    edit: false,
+    delete: false
   },
   {
     todoCode: '202202201', 
@@ -53,7 +59,8 @@ module.exports = [
     title: 'Todo 20220220-1', 
     contents: 'Todo 1 Todo 1 Todo 1', 
     done: false, 
-    edit: false
+    edit: false,
+    delete: false
   },
   {
     todoCode: '202202202', 
@@ -61,7 +68,8 @@ module.exports = [
     title: 'Todo 20220220-2', 
     contents: 'Todo 2 Todo 2 Todo 2', 
     done: false, 
-    edit: false
+    edit: false,
+    delete: false
   },
   {
     todoCode: '202202211', 
@@ -69,7 +77,8 @@ module.exports = [
     title: 'Todo 20220221-1', 
     contents: 'Todo 1 Todo 1 Todo 1', 
     done: false, 
-    edit: false
+    edit: false,
+    delete: false
   },
   {
     todoCode: '202202212', 
@@ -77,7 +86,8 @@ module.exports = [
     title: 'Todo 20220221-2', 
     contents: 'Todo 2 Todo 2 Todo 2', 
     done: false, 
-    edit: false
+    edit: false,
+    delete: false
   },
   {
     todoCode: '202202213', 
@@ -85,6 +95,7 @@ module.exports = [
     title: 'Todo 20220221-3', 
     contents: 'Todo 3 Todo 3 Todo 3', 
     done: false, 
-    edit: false
+    edit: false,
+    delete: false
   },
 ];
