@@ -1,34 +1,53 @@
-// Express / port / cors & body-parser --------------------------------- //
+// [ Node.js & Sequelize ]
+
+// EXPRESS
 const express = require('express');
 const app = express();
 const port = 4000;
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-// InitialTodoData ------------------------------------------------------ //
-const initialTodoData = require('../src/InitialTodoData.js');
-
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
-app.use(bodyParser.json());
-// app.use(express.json()); 
+app.use(express.json()); 
 
-// API ------------------------------------------------------------------ //
-// GET 
-/// 모든 Todos 조회
-app.get('/initialtodos', (req, res) => {
-  res.send(initialTodoData);
+
+// SEQUELIZE
+const db = require('../models/index.js');
+const { Todo } = db;
+
+Todo.sync({froce : false})
+  .then(() => {
+    console.log('DB 연결 성공!');
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+
+
+// API
+// ---- GET ---- 
+// 모든 Todos 조회
+app.get('/todos', async(req, res) => {
+  let response = await Todo.findAll();
+  // res.send(response);
+  res.send(response.body);
+});
+// 특정 Todos 조회
+app.get('/todos/:dailyKey', async(req, res) => {
+  const { dailyKey } =  req.params;
+  let response = await Todo.findAll({ where: { date : dailyKey } });
+  res.send(response);
 });
 
-/// 특정 날짜에 해당하는 Todos 조회
-app.get('/initialtodos/:dailyKey', (req, res) => {
-  const {dailyKey} =  req.params;
-  res.send(initialTodoData.filter(todo => todo.date === Number(dailyKey)));
-});
+// ---- PUT ---- 
+app.put('/todos/:dailyKey');
+// ---- POST ---- 
+app.post('/todos/:dailyKey');
+// ---- DELETE ---- 
+app.delete('/todos/:dailyKey');
 
-
-// listen() ------------------------------------------------------------- //
+// LISTEN
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });

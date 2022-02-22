@@ -1,3 +1,5 @@
+// [ NOTE ]
+
 // Express / port / cors & body-parser --------------------------------- //
 const express = require('express');
 const app = express();
@@ -7,7 +9,6 @@ const bodyParser = require('body-parser');
 
 // InitialTodoData ------------------------------------------------------ //
 const initialTodoData = require('../src/InitialTodoData.js');
-
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,7 +25,7 @@ app.get('/initialtodos', (req, res) => {
   res.send(initialTodoData);
 })
 /*
-// ========================================= //
+// ==================== O =================== //
 /// 모든 Todos 조회
 app.get('/initialtodos', (req, res) => {
   res.send(initialTodoData);

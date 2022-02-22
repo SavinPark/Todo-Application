@@ -4,7 +4,7 @@ import Item from './Item.jsx';
 
 function List() {
 
-  const {todos, loading, changeTodoDone, changeTodoEdit, changeTodoDelete} = useContext(TodoContext);
+  const {todos, when, loading, changeTodoDone, changeTodoEdit, changeTodoDelete} = useContext(TodoContext);
 
   /*
   - List.jsx는 전달 받은 loading의 값이 true이면 "Loading..."을 출력하고,

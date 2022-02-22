@@ -15,14 +15,14 @@ export const TodoContext = React.createContext();
 // App Component
 function App() {
 
-  const [todos, setTodos] = useState([]);  // todos
+  const [todos, setTodos] = useState([]);  // todos 
 
   // Today
+  const [when, setWhen] = useState(0);
   const now = new Date();
-  const dailyKey = Number(new Date(now.setDate(now.getDate()+1)).toISOString().substring(0,10).replace(/-/g,'')); // YYYYMMDD (number)
-  // const dailyKey = Number(new Date(now.setDate(now.getDate()+when)).toISOString().substring(0,10).replace(/-/g,''));
+  const dailyKey = Number(new Date(now.setDate(now.getDate() + when)).toISOString().substring(0,10).replace(/-/g,''));
   
-  const loading = useFetch(setTodos, `http://localhost:4000/initialtodos/${dailyKey}`);
+  const loading = useFetch(setTodos, `http://localhost:4000/todos/${dailyKey}`);
   
   const addTodo = (newTodoTitle, newTodoContents) => { // addTodo : 새로운 todo를 배열에 추가하는 함수
     setTodos([...todos, {todoCode: `${dailyKey}${todos.length + 1}`, date: dailyKey, title: newTodoTitle, contents: newTodoContents, done: false, edit: false, delete: false}]);
@@ -50,6 +50,7 @@ function App() {
     })
     setTodos(updateTodos);
   }
+  // changeTodoDelete ---------------------------
   const changeTodoDelete = (todoCode) => {
     const updateTodos = todos.map(todo => {
       if(todo.todoCode === todoCode) {
@@ -73,10 +74,14 @@ function App() {
   const onPrev = () => {
     console.log('prev');
     setPrev(prev + 1);
+    setWhen(when - 1);
+    console.log(when);
   }
   const onNext = () => {
     console.log('next');
     setNext(next + 1);
+    setWhen(when + 1);
+    console.log(when);
   }
   const openForm = () => {
     setOpenFormPage(!openFormPage);
@@ -85,7 +90,7 @@ function App() {
 
   return(
 
-    <TodoContext.Provider value={{todos, addTodo, loading, changeTodoDone, changeTodoEdit, changeTodoDelete}}>
+    <TodoContext.Provider value={{todos, when, addTodo, loading, changeTodoDone, changeTodoEdit, changeTodoDelete}}>
       <Header />
       <List />
       <div className='btn-container'>
@@ -96,10 +101,12 @@ function App() {
       {
         openFormPage && <Form />
       }
-      {
+      {console.log(when)}
+      {console.log(dailyKey)}
+      {/* {
         // edit === true 이면 Form 컴포넌트 open
         todos.map(todo => todo.edit && <Form />) 
-      }
+      } */}
     </TodoContext.Provider>
   );
 }

@@ -32,3 +32,10 @@ Todo 추가/수정/삭제/완료상태 표현 기능 구현 미완성
 * 수정 (미완료)
 * 삭제 (미완료)
 * 완료상태 표현 (완료)
+
+### [7] DB 연결
+* Database : MySQL
+* 런타임 환경 : Express
+#### DB <---> Server
+* 1) Node.js MySQL Module version
+* 2) Sequelize version
