@@ -66,17 +66,46 @@ app.post('/add/todo', async (req, res) => {
 });
 
 // ------ PUT 수정 -------- 
-// app.put('/edit/todo/:dailyKey', (req, res) => {
-//   const { dailyKey } =  req.params;
-//   console.log(req.body);
-// });
+// todo의 제목 & 내용 업데이트
+app.put('/update/todo/:todoCode', async (req, res) => {
+  const { todoCode } =  req.params;
+  const newInfo = req.body;
+  // console.log('----------------------------------------------'); // 디버깅
+  // console.log(todoCode, newInfo);
+  const result = await Todo.update(newInfo, { where: { todoCode } });
+  if (result[0]) {
+    // 배열의 첫 번째 요소가 0이 아닐 경우
+    res.send({ message: `${result[0]} row(s) affected` });
+  } else {
+    // 배열의 첫 번째 요소가 0일 경우
+    res.status(404).send({ message : 'There is no such Todo with the todoCode!' });
+  }
+});
+
+// todo의 done(완료/미완료)상태 업데이트
+app.put('/update/todo/done/:todoCode', async (req, res) => {
+  const { todoCode } =  req.params;
+  const newInfo = req.body;
+  console.log('----------------------------------------------'); // 디버깅
+  console.log(todoCode, newInfo);
+  const result = await Todo.update(newInfo, { where: { todoCode } });
+  if (result[0]) {
+    // 배열의 첫 번째 요소가 0이 아닐 경우
+    res.send({ message: `${result[0]} row(s) affected` });
+  } else {
+    // 배열의 첫 번째 요소가 0일 경우
+    res.status(404).send({ message : 'There is no such Todo with the todoCode!' });
+  }
+});
 
 // -------- DELETE 삭제 -------- 
+// app.delete('/delete/todo/:todoCode', async (req, res) => {
 app.delete('/delete/todo/:todoCode', async (req, res) => {
-  const { todoCode } =  req.params;
+  const {todoCode } =  req.params;
   // console.log(todoCode); // 디버깅
   // console.log('----------------------------------------------'); // 디버깅
   const deletedCount = await Todo.destroy({ where: { todoCode }});
+
   if(deletedCount) {
     // 삭제될 row가 있을 경우
     res.send({ message: `${deletedCount} row(s) deleted` });

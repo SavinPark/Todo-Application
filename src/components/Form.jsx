@@ -9,13 +9,12 @@ function Form({todo}) {  // $$$$
   const {addTodo, editTodo} = useContext(TodoContext);
   
   // addTodoData
-  const addTodoData = (e) => {
+  const saveTodoData = (e) => {
     e.preventDefault(); 
-    // addTodo(titleRef.current.value, contentsRef.current.value);
-    
-    // ----- edit 기능 추가 ----- //
-    if (todo) { // $$$$ // edit 기능
-      console.log('수정', todo.title); // just for test
+    // addTodo(titleRef.current.value, contentsRef.current.value);  // EDIT 기능 추가 전
+
+    // EDIT 기능 추가 후
+    if (todo) { // edit 기능
       editTodo(todo.todoCode, titleRef.current.value, contentsRef.current.value);
     } else {
       addTodo(titleRef.current.value, contentsRef.current.value); // add 기능
@@ -38,7 +37,7 @@ function Form({todo}) {  // $$$$
           <textarea placeholder="Contents" className="contents" ref={contentsRef}/>
         </>
       }
-    <button onClick={addTodoData} className="addBtn">SAVE</button>
+    <button onClick={saveTodoData} className="addBtn">SAVE</button>
     </form>
   );
 }

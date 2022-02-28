@@ -65,25 +65,15 @@ function App() {
         'edit' : "0",
         'delete' : "0"
       },
-      headers: new Headers()
+      // headers: new Headers()
     });
     alert('Todo 등록 완료');
     return window.location.reload();
   }
 
-  // changeTodoDone
-  const changeTodoDone = (todoCode) => {
-    const updateTodos = todos.map(todo => {
-      if(todo.todoCode === todoCode) {
-        if(todo.done === "1") todo.done = "0";
-        else todo.done = "1";
-      }
-      return todo;
-    })
-    setTodos(updateTodos);
-  }
-
-  const editTodo = (todoCode, newTitle, newContents) => {  // Todo의 변경사항을 반영 (Todo 수정)
+  
+  // editTodo
+  const editTodo = async (todoCode, newTitle, newContents) => {  // Todo의 변경사항을 반영 (Todo 수정)
     const newTodos = [];
     todos.map(todo => {
       if (todo.todoCode === todoCode) {
@@ -94,6 +84,51 @@ function App() {
       }
     })
     setTodos(newTodos);
+    // 업데이트된 todo를 post로 server에 보냄
+    const res = await axios(`http://localhost:4000/update/todo/${todoCode}`, {
+      method: 'PUT',
+      data : {
+        'todoCode': todoCode,
+        'date' : dailyKey,
+        'title' : newTitle,
+        'contents' : newContents,
+        'done' : "0",
+        'edit' : "0",
+        'delete' : "0"
+      },
+      // headers: new Headers()
+    });
+    if(res.data) {
+      alert('Todo 수정 완료');
+      return window.location.reload();
+    }
+  }
+
+  // changeTodoDone
+  // const changeTodoDone = async (todoCode, todo) => {
+  const changeTodoDone = async (TODO) => {
+    const updateTodos = todos.map(todo => {
+      if(todo.todoCode === TODO.todoCode) {
+        if(todo.done === "1") todo.done = "0";
+        else todo.done = "1";
+      }
+      return todo;
+    })
+    setTodos(updateTodos);
+    
+    console.log(TODO); //디버깅
+    
+    // 업데이트된 todo를 put로 server에 보냄
+    await axios(`http://localhost:4000/update/todo/done/${TODO.todoCode}`, {
+      method: 'PUT',
+      data : {
+        ...TODO,
+        'done' : TODO.done==="1" ? "1" : "0" 
+     },
+     // headers: new Headers()
+    });
+    alert('Todo 완료/미완료');
+    return window.location.reload();
   }
 
   // changeTodoEdit ---------------------------
@@ -106,26 +141,6 @@ function App() {
       return todo;
     })
     setTodos(updateTodos);
-    
-    // 업데이트된 todo를 post로 server에 보냄
-    // const res = await axios(`http://localhost:4000/edit/todo/${todoCode}`, {
-    //   method: 'PUT',
-    //   data : {
-    //     'todoCode': todoCode,
-    //     'date' : dailyKey,
-    //     'title' : newTodoTitle,
-    //     'contents' : newTodoContents,
-    //     'done' : "0",
-    //     'edit' : "0",
-    //     'delete' : "0"
-    //   },
-    //   headers: new Headers()
-    // });
-
-    // if(res.data) {
-    //   alert('Todo 수정 완료');
-    //   return window.location.reload();
-    // }
   }
 
   // changeTodoDelete ---------------------------
@@ -137,13 +152,13 @@ function App() {
       }
       return todo;
     })
-    console.log(updateTodos); // 디버깅
+    // console.log(updateTodos); // 디버깅
     setTodos(updateTodos);
     // 업데이트된 todo를 delete로 server에 보냄
-    const res = await axios(`http://localhost:4000/delete/todo/${todoCode}`, {
-    // await axios(`http://localhost:4000/delete/todo/${todoCode}`, {
+    // const res = await axios(`http://localhost:4000/delete/todo/${todoCode}`, {
+    await axios(`http://localhost:4000/delete/todo/${todoCode}`, {
       method: 'DELETE',
-      headers: new Headers()
+      // headers: new Headers()
     });
     alert('Todo 삭제 완료');
     return window.location.reload();

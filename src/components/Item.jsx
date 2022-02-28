@@ -6,11 +6,12 @@ import Form from './Form';
 // function Item({todo, when,  changeTodoDone, changeTodoEdit, changeTodoDelete}) { // ----------
 function Item({todo}) {
 
-  const {when,  changeTodoDone, changeTodoEdit, changeTodoDelete} = useContext(TodoContext);
+  const {when, changeTodoDone, changeTodoEdit, changeTodoDelete} = useContext(TodoContext);
 
   // toggleDone : 할 일의 완료/미완료 상태를 표현하는 함수
   const toggleDone = (e) => {
-    changeTodoDone(e.target.dataset.id);
+    // changeTodoDone(e.target.dataset.id, todo);
+    changeTodoDone(todo);
   }
   // toggleEdit : 할 일의 edit 상태를 표tl
   const toggleEdit = (e) => {
@@ -25,7 +26,11 @@ function Item({todo}) {
 
   return(
     <div className='item-container'>
-      <input type="checkbox" data-id={todo.todoCode} onClick={toggleDone} />
+      {
+        todo.done === "1" ?
+        <input type="checkbox" data-id={todo.todoCode} onClick={toggleDone} checked /> : 
+        <input type="checkbox" data-id={todo.todoCode} onClick={toggleDone} />
+      }
       <li data-id={todo.todoCode} key={todo.todoCode} className={ItemClassName} when={when}>{todo.title}</li>
       {/* <li data-id={todo.todoCode} onClick={toggleDone} className={ItemClassName}>{todo.title}</li> */}
       <button data-id={todo.todoCode} className="btn--delete" onClick={toggleEdit}>EDIT</button>
