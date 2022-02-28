@@ -14,13 +14,16 @@ function List() {
   // const todoList = todos.map(todo => <li key={todo.id}>{todo.title}</li>);
   // if(!loading) todoList = todos.map(todo => <li key={todo.todoCode}>{todo.title}</li>);
   if(!loading) todoList = todos.map(todo => 
-    <Item key={todo.todoCode} todo={todo} changeTodoDone={changeTodoDone} changeTodoEdit={changeTodoEdit} changeTodoDelete={changeTodoDelete} />
+    <Item key={todo.todoCode} todo={todo} changeTodoDone={changeTodoDone} changeTodoEdit={changeTodoEdit} changeTodoDelete={changeTodoDelete} when={when} />
   );
 
   
   return(
     <ul>
       {todoList}
+
+      {/* ------------- 디버깅 ------------- */}
+      {console.log('List Component', todos)}
     </ul>
   );
 }

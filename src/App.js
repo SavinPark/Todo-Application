@@ -16,16 +16,43 @@ export const TodoContext = React.createContext();
 function App() {
 
   const [todos, setTodos] = useState([]);  // todos 
-
+  const [when, setWhen] = useState(0); // when
   // Today
-  const [when, setWhen] = useState(0);
   const now = new Date();
-  const dailyKey = Number(new Date(now.setDate(now.getDate() + when)).toISOString().substring(0,10).replace(/-/g,''));
+  // let dailyKey = Number(new Date(now.setDate(now.getDate() + when)).toISOString().substring(0,10).replace(/-/g,''));
+  const [dailyKey, setDaliyKey] = useState(Number(new Date(now.setDate(now.getDate())).toISOString().substring(0,10).replace(/-/g,'')));
   
-  const loading = useFetch(setTodos, `http://localhost:4000/todos/${dailyKey}`);
+
+  // Date Control Btns ----------------------
+  const [prev, setPrev] = useState(0);
+  const [next, setNext] = useState(0);
+  const [openFormPage, setOpenFormPage] = useState(false);
+  const onPrev = () => {
+    console.log('prev');
+    setPrev(prev + 1);
+    setWhen(when - 1);
+
+    // setDaliyKey(dailyKey + when - 1);
+    setDaliyKey(Number(new Date(now.setDate(now.getDate() + when -1)).toISOString().substring(0,10).replace(/-/g,'')));
+    console.log('when :',when, 'dailyKey', dailyKey);  // 디버깅
+  }
+  const onNext = () => {
+    console.log('next');
+    setNext(next + 1);
+    setWhen(when + 1);
+
+    // setDaliyKey(dailyKey + when + 1);
+    setDaliyKey(Number(new Date(now.setDate(now.getDate() + when + 1)).toISOString().substring(0,10).replace(/-/g,'')));
+    console.log('when :',when, 'dailyKey', dailyKey);  // 디버깅
+  }
+  const openForm = () => {
+    setOpenFormPage(!openFormPage);
+  }
+  
+  let loading = useFetch(when, setTodos, `http://localhost:4000/todos/${dailyKey}`);
   
   const addTodo = (newTodoTitle, newTodoContents) => { // addTodo : 새로운 todo를 배열에 추가하는 함수
-    setTodos([...todos, {todoCode: `${dailyKey}${todos.length + 1}`, date: dailyKey, title: newTodoTitle, contents: newTodoContents, done: false, edit: false, delete: false}]);
+    setTodos([...todos, {todoCode: `${dailyKey}${todos.length + 1}`, date: dailyKey, title: newTodoTitle, contents: newTodoContents, done: false, edit: true, delete: false}]);
   }
 
   // changeTodoDone
@@ -59,33 +86,13 @@ function App() {
       }
       return todo;
     })
-    console.log(updateTodos);
+    console.log(updateTodos); // 디버깅
     setTodos(updateTodos);
   }
 
   useEffect(() => {
-    console.log("새로운 내용이 추가되었습니다.", todos);
-  }, [todos]);
-
-  // Date Control Btns ----------------------
-  const [prev, setPrev] = useState(0);
-  const [next, setNext] = useState(0);
-  const [openFormPage, setOpenFormPage] = useState(false);
-  const onPrev = () => {
-    console.log('prev');
-    setPrev(prev + 1);
-    setWhen(when - 1);
-    console.log(when);
-  }
-  const onNext = () => {
-    console.log('next');
-    setNext(next + 1);
-    setWhen(when + 1);
-    console.log(when);
-  }
-  const openForm = () => {
-    setOpenFormPage(!openFormPage);
-  }
+    console.log("새로운 내용이 추가되었습니다.", when, todos);
+  }, [todos, when]);
 
 
   return(
@@ -101,14 +108,12 @@ function App() {
       {
         openFormPage && <Form />
       }
-      {console.log(when)}
-      {console.log(dailyKey)}
-      {/* {
-        // edit === true 이면 Form 컴포넌트 open
-        todos.map(todo => todo.edit && <Form />) 
-      } */}
+
+      {/* --------------------- 디버깅 ------------------------ */}
+      {console.log(`http://localhost:4000/todos/${dailyKey}`, todos)}
     </TodoContext.Provider>
   );
 }
 
 export default App;
+

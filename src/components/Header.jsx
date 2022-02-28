@@ -8,7 +8,7 @@ function Header() {
   const {todos, when} = useContext(TodoContext);
 
   // 미완료 상태(done: false)인 todo들의 배열
-  const undoneTasks = todos.filter(todo => todo.done === false);
+  const undoneTasks = todos.filter(todo => todo.done === "0");
 
   // 날짜, 요일
   const now = new Date();
@@ -28,6 +28,9 @@ function Header() {
       <h1 className='date'>{dateString}</h1>
       <div className='dayname'>{dayName}</div>
       <div className='countInfo'>{`남은 할 일 : ${undoneTasks.length}`}</div>
+
+      {/* ---------------------------- 디버깅  --------------------------- */}
+      {/* {console.log(todos)} */}
     </>    
   );
 }

@@ -39,3 +39,11 @@ Todo 추가/수정/삭제/완료상태 표현 기능 구현 미완성
 #### DB <---> Server
 * 1) Node.js MySQL Module version
 * 2) Sequelize version
+
+### [8] 버그 수정
+1. 남은 할 일 제대로 count 못하는 버그
+* 원인 : DB에 false값은 "0", true값을 "1"로 저장됨
+* 해결 : Header.jsx의 undoneTasks의 filter 조건을 false가 아닌 "0" 즉, todo.done === "0"으로 변경
+2. PREV NEXT 버튼을 눌러 날짜 조정 시, 날짜에 맞는 TODO 목록 렌더링 안되는 버그
+* 원인 : when의 변화를 감지하지 못함
+* 해결 : useFetch 에 when을 전달하여 useEffect 훅에서 when에 변화가 있을 때마다 fetchInitialData를 호출하도록 지정

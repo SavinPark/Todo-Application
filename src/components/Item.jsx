@@ -9,7 +9,7 @@ function Item({todo, when,  changeTodoDone, changeTodoEdit, changeTodoDelete}) {
   const toggleDone = (e) => {
     changeTodoDone(e.target.dataset.id);
   }
-  // toggleEdit : edit 상태 표시
+  // toggleEdit : 할 일의 edit 상태를 표tl
   const toggleEdit = (e) => {
     changeTodoEdit(e.target.dataset.id);
   }
@@ -23,12 +23,12 @@ function Item({todo, when,  changeTodoDone, changeTodoEdit, changeTodoDelete}) {
   return(
     <div className='item-container'>
       <input type="checkbox" data-id={todo.todoCode} onClick={toggleDone} />
-      <li data-id={todo.todoCode} key={todo.todoCode} className={ItemClassName}>{todo.title}</li>
+      <li data-id={todo.todoCode} key={todo.todoCode} className={ItemClassName} when={when}>{todo.title}</li>
       {/* <li data-id={todo.todoCode} onClick={toggleDone} className={ItemClassName}>{todo.title}</li> */}
       <button data-id={todo.todoCode} className="btn--delete" onClick={toggleEdit}>EDIT</button>
       <button data-id={todo.todoCode} className="btn--delete" onClick={toggleDelete}>DELETE</button>
 
-      {todo.edit && <Form id={todo.todoCode}/>}
+      {!todo.edit && <Form id={todo.todoCode}/>}
     </div>
   );
 }
