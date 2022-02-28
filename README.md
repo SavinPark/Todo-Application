@@ -57,3 +57,9 @@ Todo 추가/수정/삭제/완료상태 표현 기능 구현 미완성
 1. 버그 1 ) EDIT 버튼 첫 클릭에 반응하지 않음
 * 원인 : 반대로 생각해서 코드 작성 & "0"/"1"가 아닌 false/true 값 때문인 것으로 예상
 * 영향 : 이 것 때문에 edit 속성값 얽히는 문제 발생
+2. 새로운 Todo 추가 기능 구현
+* POST API 작성
+* React, Express, MySQL 작업 완료
+3. Todo 삭제 기능 구현
+* DELETE API 작성
+* React, Express, MySQL 작업 완료
