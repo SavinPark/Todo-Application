@@ -63,3 +63,8 @@ Todo 추가/수정/삭제/완료상태 표현 기능 구현 미완성
 3. Todo 삭제 기능 구현
 * DELETE API 작성
 * React, Express, MySQL 작업 완료
+
+### [10] Todo 수정 기능 구현 (only on React)
+* Server에 변경 사항 반영 안 된 상태
+* DB에도 변경 사항 반영 안 된 상태
+* 오직 React상에서만 구현 완료

@@ -83,6 +83,19 @@ function App() {
     setTodos(updateTodos);
   }
 
+  const editTodo = (todoCode, newTitle, newContents) => {  // Todo의 변경사항을 반영 (Todo 수정)
+    const newTodos = [];
+    todos.map(todo => {
+      if (todo.todoCode === todoCode) {
+        const updateTodo = {todoCode, date: dailyKey, title: newTitle, contents: newContents, done: "0", edit: "0", delete: "0"}
+        newTodos.push(updateTodo);
+      } else {
+        newTodos.push(todo);
+      }
+    })
+    setTodos(newTodos);
+  }
+
   // changeTodoEdit ---------------------------
   const changeTodoEdit = (todoCode) => {
     const updateTodos = todos.map(todo => {
@@ -93,27 +106,26 @@ function App() {
       return todo;
     })
     setTodos(updateTodos);
-    /*
+    
     // 업데이트된 todo를 post로 server에 보냄
-    const res = await axios(`http://localhost:4000/add/todo`, {
-      method: 'PUT',
-      data : {
-        'todoCode': todoCode,
-        'date' : dailyKey,
-        'title' : newTodoTitle,
-        'contents' : newTodoContents,
-        'done' : "0",
-        'edit' : "0",
-        'delete' : "0"
-      },
-      headers: new Headers()
-    });
+    // const res = await axios(`http://localhost:4000/edit/todo/${todoCode}`, {
+    //   method: 'PUT',
+    //   data : {
+    //     'todoCode': todoCode,
+    //     'date' : dailyKey,
+    //     'title' : newTodoTitle,
+    //     'contents' : newTodoContents,
+    //     'done' : "0",
+    //     'edit' : "0",
+    //     'delete' : "0"
+    //   },
+    //   headers: new Headers()
+    // });
 
-    if(res.data) {
-      alert('Todo 수정 완료');
-      return window.location.reload();
-    }
-    */
+    // if(res.data) {
+    //   alert('Todo 수정 완료');
+    //   return window.location.reload();
+    // }
   }
 
   // changeTodoDelete ---------------------------
@@ -145,7 +157,7 @@ function App() {
 
   return(
 
-    <TodoContext.Provider value={{todos, when, addTodo, loading, changeTodoDone, changeTodoEdit, changeTodoDelete}}>
+    <TodoContext.Provider value={{todos, when, addTodo, editTodo, loading, changeTodoDone, changeTodoEdit, changeTodoDelete}}>
       <Header />
       <List />
       <div className='btn-container'>

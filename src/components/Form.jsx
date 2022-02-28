@@ -2,24 +2,43 @@ import React, { useContext, useRef } from 'react';
 import { TodoContext } from '../App.js';
 import './Form.css';
 
-// function Form({id}) { // ?????? 
-function Form() {
-
+function Form({todo}) {  // $$$$ 
+// function Form() {
   const titleRef = useRef(false);
   const contentsRef = useRef(false);
-  const {addTodo} = useContext(TodoContext);
+  const {addTodo, editTodo} = useContext(TodoContext);
   
   // addTodoData
   const addTodoData = (e) => {
     e.preventDefault(); 
-    addTodo(titleRef.current.value, contentsRef.current.value);
+    // addTodo(titleRef.current.value, contentsRef.current.value);
+    
+    // ----- edit 기능 추가 ----- //
+    if (todo) { // $$$$ // edit 기능
+      console.log('수정', todo.title); // just for test
+      editTodo(todo.todoCode, titleRef.current.value, contentsRef.current.value);
+    } else {
+      addTodo(titleRef.current.value, contentsRef.current.value); // add 기능
+    }
   }
 
   return(
     <form action="" className='todoForm'>
-      <input placeholder="Title" type="text" className="title" ref={titleRef}/>
-      <textarea placeholder="Contents" className="contents" ref={contentsRef}/>
-      <button onClick={addTodoData} className="addBtn">SAVE</button>
+      { 
+        todo ? 
+        // EDIT 기능
+        <>
+          <input placeholder={todo.title} type="text" className="title" ref={titleRef}/> 
+          <textarea placeholder={todo.contents} className="contents" ref={contentsRef}/>
+        </>
+        :
+        // ADD 기능
+        <>
+          <input placeholder="Title" type="text" className="title" ref={titleRef}/> 
+          <textarea placeholder="Contents" className="contents" ref={contentsRef}/>
+        </>
+      }
+    <button onClick={addTodoData} className="addBtn">SAVE</button>
     </form>
   );
 }

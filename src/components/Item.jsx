@@ -1,4 +1,4 @@
-import React, {  useContext, useRef } from 'react';
+import React, {  useContext } from 'react';
 import { TodoContext } from '../App.js';
 import './Item.css';
 import Form from './Form';
@@ -6,8 +6,6 @@ import Form from './Form';
 // function Item({todo, when,  changeTodoDone, changeTodoEdit, changeTodoDelete}) { // ----------
 function Item({todo}) {
 
-  const titleRef = useRef(false);
-  const contentsRef = useRef(false);
   const {when,  changeTodoDone, changeTodoEdit, changeTodoDelete} = useContext(TodoContext);
 
   // toggleDone : 할 일의 완료/미완료 상태를 표현하는 함수
@@ -33,7 +31,8 @@ function Item({todo}) {
       <button data-id={todo.todoCode} className="btn--delete" onClick={toggleEdit}>EDIT</button>
       <button data-id={todo.todoCode} className="btn--delete" onClick={toggleDelete}>DELETE</button>
 
-      {todo.edit === "1" && <Form id={todo.todoCode} />}
+      {/* {todo.edit === "1" && <Form id={todo.todoCode} todo={todo} />} */}
+      {todo.edit === "1" && <Form todo={todo} />}
     </div>
   );
 }

@@ -25,7 +25,7 @@ function List() {
     <ul>
       {todoList}
       {/* ------------- 디버깅 ------------- */}
-      {console.log('List Component', todos)}
+      {/* {console.log('List Component', todos)} */}
     </ul>
   );
 }
