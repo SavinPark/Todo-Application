@@ -69,7 +69,7 @@ Todo 추가/수정/삭제/완료상태 표현 기능 구현 미완성
 * DB에도 변경 사항 반영 안 된 상태
 * 오직 React상에서만 구현 완료
 
-### [11] PUT : Todo 수정 기능
+### [11] PUT : Todo 수정 기능 + 버그 발견 + 체크박스 버그 수정
 * PUT API 작성
 * React, Express, MySQL 작업 완료
 * Todo의 제목(title), 내용(contents), 완료상태(done), edit상태(edit), delete상태(delete)에 변경사항이 생기면 MySQL 데이터베이스에도 업데이트 내용 적용됨
