@@ -20,13 +20,13 @@
     하지만 새로 추가된 todo의 todoCode는 todos 목록에서의 순서를 의미하는 숫자 타입이다.
   * 해결방법 : 오늘에 해당하는 할 일만 렌더링되도록 todo application을 수정하고, todoCode형식도 변경해준다.
 
-### [5] 버그 수정  + 오늘의 TodoList 보기
+### [5] 버그 수정  +  오늘의 TodoList 보기
 * Header 컴포넌트에 날짜 & 요일 표현 추가
 * 해당 날짜에 대한 Todo 목록 불러오기
 * 새로운 항목 추가 시 올바른 todoCode 적용
 * 할 일의 완료/미완료 상태 표현 기능 버그 수정 완료
 
-### [6] TodoList 기능 구현 + DB 연결 전 Save
+### [6] TodoList 기능 구현  +  DB 연결 전 Save
 Todo 추가/수정/삭제/완료상태 표현 기능 구현 미완성
 * 추가 (완료)
 * 수정 (미완료)
@@ -47,3 +47,13 @@ Todo 추가/수정/삭제/완료상태 표현 기능 구현 미완성
 2. PREV NEXT 버튼을 눌러 날짜 조정 시, 날짜에 맞는 TODO 목록 렌더링 안되는 버그
 * 원인 : when의 변화를 감지하지 못함
 * 해결 : useFetch 에 when을 전달하여 useEffect 훅에서 when에 변화가 있을 때마다 fetchInitialData를 호출하도록 지정
+
+### [9] 버그 수정  +  POST : 새로운 Todo 추가 기능  +  DELETE : Todo 삭제 기능
+0. 버그는 아니지만 나중에 문제될까봐 미리 수정
+* MySQL 데이터베이스에는 BOOLEAN TYPE은 TINYINT(1) 형식으로 정의
+* 즉, FALSE 값은 "0" 으로,TRUE 값은 "1" 로 저장
+* initialTodoData에서 boolean 값으로 저장된 속성은 done, edit, delete 3가지가 존재
+* 이 3가지 속성에 해당하는 값을 false/true 대신 "0"/"1"로 변경
+1. 버그 1 ) EDIT 버튼 첫 클릭에 반응하지 않음
+* 원인 : 반대로 생각해서 코드 작성 & "0"/"1"가 아닌 false/true 값 때문인 것으로 예상
+* 영향 : 이 것 때문에 edit 속성값 얽히는 문제 발생

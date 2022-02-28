@@ -2,7 +2,8 @@ import React, { useContext, useRef } from 'react';
 import { TodoContext } from '../App.js';
 import './Form.css';
 
-function Form({id}) {
+// function Form({id}) { // ?????? 
+function Form() {
 
   const titleRef = useRef(false);
   const contentsRef = useRef(false);

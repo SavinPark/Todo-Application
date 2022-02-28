@@ -24,40 +24,37 @@ Todo.sync({froce : false})
     console.log(error);
   })
 
-
 // API
-// --------  GET -------- 
-
+// --------  GET 조회 -------- 
 // 모든 Todos 조회
-app.get('/todos', async(req, res) => {
+app.get('/todos', async (req, res) => {
   let response = await Todo.findAll();
   res.send(response);
 });
 // 특정 Todos 조회
-app.get('/todos/:dailyKey', async(req, res) => {
+app.get('/todos/:dailyKey', async (req, res) => {
   const { dailyKey } =  req.params;
   let response = await Todo.findAll({ where: { date : dailyKey } });
-  console.log(dailyKey); // 디버깅
-  console.log(response); // 디버깅
+  // console.log(dailyKey); // 디버깅
+  // console.log(response); // 디버깅
   res.send(response);
 });
 
-/*
-// -------- POST -------- 
+// -------- POST 등록 -------- 
 // [참고] https://fe-flower.tistory.com/32
 // 새로운 Todo 추가
-app.post('/add/:dailyKey', (req, res) => {
-  const { dailyKey } =  req.params;
-  console.log(req.body);
-
-  Todo.create({
-    todoCode: req.body.todoCode,
-    date: dailyKey, // req.body.date
-    title: req.body.title,
-    contents: req.body.contents,
-    done: false, // "0" , req.body.done
-    edit: false, // "0" , req.body.edit
-    delete : false // "0" , req.body.delete
+app.post('/add/todo', async (req, res) => {
+  // const { dailyKey } =  req.params;
+  // console.log('-----------------------',req.body, '-----------------------'); // 디버깅
+  const newTodo = req.body;
+  await Todo.create({
+    todoCode: newTodo.todoCode,
+    date: newTodo.date, // req.body.date
+    title: newTodo.title,
+    contents: newTodo.contents,
+    done: newTodo.done, // "0" , req.body.done
+    edit: newTodo.edit, // "0" , req.body.edit
+    delete : newTodo.delete // "0" , req.body.delete
   })
   .then(result => {
     res.send(result);
@@ -68,18 +65,27 @@ app.post('/add/:dailyKey', (req, res) => {
   })
 });
 
-// ------ PUT -------- 
-app.post('/put/:dailyKey', (req, res) => {
-  const { dailyKey } =  req.params;
-  console.log(req.body);
+// ------ PUT 수정 -------- 
+// app.put('/edit/todo/:dailyKey', (req, res) => {
+//   const { dailyKey } =  req.params;
+//   console.log(req.body);
+// });
+
+// -------- DELETE 삭제 -------- 
+app.delete('/delete/todo/:todoCode', async (req, res) => {
+  const { todoCode } =  req.params;
+  // console.log(todoCode); // 디버깅
+  // console.log('----------------------------------------------'); // 디버깅
+  const deletedCount = await Todo.destroy({ where: { todoCode }});
+  if(deletedCount) {
+    // 삭제될 row가 있을 경우
+    res.send({ message: `${deletedCount} row(s) deleted` });
+  } else {
+    // 삭제될 row가 없을 경우
+    res.status(404).send({ message : 'There is no member with the id!' });
+  }
 });
 
-// -------- DELETE -------- 
-app.post('/delete/:dailyKey', (req, res) => {
-  const { dailyKey } =  req.params;
-  console.log(req.body);
-});
-*/
 
 
 // LISTEN

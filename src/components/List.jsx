@@ -4,7 +4,8 @@ import Item from './Item.jsx';
 
 function List() {
 
-  const {todos, when, loading, changeTodoDone, changeTodoEdit, changeTodoDelete} = useContext(TodoContext);
+  // const {todos, when, loading, changeTodoDone, changeTodoEdit, changeTodoDelete} = useContext(TodoContext);  // -------
+  const {todos, loading} = useContext(TodoContext);
 
   /*
   - List.jsx는 전달 받은 loading의 값이 true이면 "Loading..."을 출력하고,
@@ -13,15 +14,16 @@ function List() {
   let todoList = <div>Loading...</div>;
   // const todoList = todos.map(todo => <li key={todo.id}>{todo.title}</li>);
   // if(!loading) todoList = todos.map(todo => <li key={todo.todoCode}>{todo.title}</li>);
+
   if(!loading) todoList = todos.map(todo => 
-    <Item key={todo.todoCode} todo={todo} changeTodoDone={changeTodoDone} changeTodoEdit={changeTodoEdit} changeTodoDelete={changeTodoDelete} when={when} />
+    // <Item key={todo.todoCode} todo={todo} changeTodoDone={changeTodoDone} changeTodoEdit={changeTodoEdit} changeTodoDelete={changeTodoDelete} when={when} />  // -------
+    <Item key={todo.todoCode} todo={todo} />
   );
 
   
   return(
     <ul>
       {todoList}
-
       {/* ------------- 디버깅 ------------- */}
       {console.log('List Component', todos)}
     </ul>
