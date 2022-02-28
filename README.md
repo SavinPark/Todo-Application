@@ -75,6 +75,6 @@ Todo 추가/수정/삭제/완료상태 표현 기능 구현 미완성
 * Todo의 제목(title), 내용(contents), 완료상태(done), edit상태(edit), delete상태(delete)에 변경사항이 생기면 MySQL 데이터베이스에도 업데이트 내용 적용됨
 #### 버그 발견
 1. todo가 완료 상태인데, todo제목에 선으로 완료 표시는 되었지만, 체크 박스는 체크 되지 않음
-해결 : done === "1" 이면 checked 속성 추가, "0"이면 checked 속성 제거된 체크박스를 렌더링 (버그 수정 완료)
+* 해결 : done === "1" 이면 checked 속성 추가, "0"이면 checked 속성 제거된 체크박스를 렌더링 (버그 수정 완료)
 2. todo1(a), todo2(b) 존재 -> todo3(c) 생성 -> todo2(b) 삭제 -> todo4(c) 생성 --> todo3과 todo4의 키값이 c 로 같아지는 문제 발생
 * 예상되는  해결 방법 : todoCode 속성 자체를 없애고 대신 고유한 id를 사용]
